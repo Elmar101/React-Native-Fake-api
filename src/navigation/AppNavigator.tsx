@@ -12,8 +12,14 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 import { themeColors } from "../theme";
+import { IProduct } from "../api/products";
 
-const Stack = createNativeStackNavigator();
+export type RootStackParamList = {
+  detail: { id: string };
+  products: undefined;
+  home: undefined;
+};
+const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
 
 type EntypoNameType = ComponentProps<typeof Entypo>["name"];
@@ -70,21 +76,21 @@ const AppNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Home"
+          name="home"
           component={MyTabs}
           options={{
             headerShown: false,
           }}
         />
         <Stack.Screen
-          name="Products"
+          name="products"
           component={ProductsScreen}
           options={{
             headerShown: false,
           }}
         />
         <Stack.Screen
-          name="Detail"
+          name="detail"
           component={DetailScreen}
           options={{
             headerShown: false,

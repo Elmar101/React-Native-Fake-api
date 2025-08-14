@@ -5,12 +5,11 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { getAllProducts, IProduct } from "../api/products";
-import ProductItem from "../components/ProductItem";
+import { ProductItem } from "../components";
 
 const ProductsScreen = () => {
   const [state, setState] = useState<{
@@ -61,7 +60,7 @@ const ProductsScreen = () => {
       <View className="flex-row items-center mb-4 gap-2 p-2 mt-2">
         <TextInput
           placeholder="search..."
-          className="flex-1 border text-[#dc9141] rounded-lg"
+          className="flex-1 border text-[#d4a574] rounded-lg"
           value={state.searchValue ?? ""}
           onChangeText={handleSearchChange}
         />
