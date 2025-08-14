@@ -2,9 +2,9 @@ import axios from "axios"
 
 const BASE_URL = "https://fakestoreapi.com";
 export interface IProduct {
-  id: number
+  id?: number | string
   title: string
-  price: number
+  price: number | string
   description: string
   category: string
   image: string
@@ -24,5 +24,14 @@ export const getProductById = async (id: string): Promise<IProduct> => {
     return res.data;
   } catch (error) {
     throw new Error("Error fetching product");
+  }
+}
+
+export const addProduct = async (product: IProduct): Promise<IProduct> => {
+  try {
+    const res = await axios.post<IProduct>(`${BASE_URL}/products`, JSON.stringify(product));
+    return res.data;
+  } catch (error) {
+    throw new Error("Error adding product");
   }
 }

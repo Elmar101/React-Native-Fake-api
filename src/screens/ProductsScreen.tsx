@@ -5,13 +5,18 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { getAllProducts, IProduct } from "../api/products";
 import { ProductItem } from "../components";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "../navigation/AppNavigator";
 
 const ProductsScreen = () => {
+  const navigate = useNavigation<NavigationProp<RootStackParamList>>();
   const [state, setState] = useState<{
     products: IProduct[];
     isLoading: boolean;
@@ -33,7 +38,7 @@ const ProductsScreen = () => {
   };
 
   const handleSearchChange = (text: string) => {
-    if(text === "") {
+    if (text === "") {
       fetchData();
       return;
     }
@@ -44,8 +49,17 @@ const ProductsScreen = () => {
         product.price.toString().includes(text) ||
         product.category.toLowerCase().includes(text.toLowerCase())
     );
-    setState({ products: filteredProducts, isLoading: false, isRefreshing: false, searchValue: text });
+    setState({
+      products: filteredProducts,
+      isLoading: false,
+      isRefreshing: false,
+      searchValue: text,
+    });
   };
+
+  const addProduct = () => {
+    navigate.navigate("add-product");
+  }
 
   if (state.isLoading) {
     return (
@@ -57,6 +71,9 @@ const ProductsScreen = () => {
 
   return (
     <View>
+        <TouchableOpacity className="w-20 h-20 absolute bottom-48 right-2 z-10" onPress={addProduct}>
+          <Ionicons name="add-circle" size={74} color="#d4a574" />
+        </TouchableOpacity>
       <View className="flex-row items-center mb-4 gap-2 p-2 mt-2">
         <TextInput
           placeholder="search..."
@@ -68,7 +85,7 @@ const ProductsScreen = () => {
       <FlatList
         data={state.products}
         renderItem={({ item }) => <ProductItem product={item} />}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.id!.toString()}
         showsVerticalScrollIndicator={false}
         // refreshing={state.isRefreshing}
         // onRefresh={handleRefresh}
@@ -83,9 +100,7 @@ const ProductsScreen = () => {
             <Text>No products found</Text>
           </View>
         )}
-        ListFooterComponent={
-            <View className="mb-44" />
-        }
+        ListFooterComponent={<View className="mb-44" />}
       />
     </View>
   );

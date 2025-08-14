@@ -23,7 +23,7 @@ const ProductItem: FC<{ product: IProduct }> = ({ product }) => {
         <View className="bg-[#d4a574] p-1 rounded-full max-w-44 right-[5px] absolute bottom-0">
           <TouchableOpacity
             className="rounded-full p-2 bg-primary"
-            onPress={() => navigator.navigate("detail", { id: product.id.toString()})}
+            onPress={() => navigator.navigate("detail", { id: product.id!.toString()})}
           >
             <Fontisto name="shopping-basket-add" size={16} color="white">
               <Text className="text-blue-600"> Add to Cart</Text>

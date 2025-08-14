@@ -13,11 +13,13 @@ import {
 } from "react-native-safe-area-context";
 import { themeColors } from "../theme";
 import { IProduct } from "../api/products";
+import AddProduct from "../screens/AddProduct";
 
 export type RootStackParamList = {
   detail: { id: string };
   products: undefined;
   home: undefined;
+  ["add-product"]: undefined;
 };
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
@@ -92,6 +94,13 @@ const AppNavigator = () => {
         <Stack.Screen
           name="detail"
           component={DetailScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="add-product"
+          component={AddProduct}
           options={{
             headerShown: false,
           }}
